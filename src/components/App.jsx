@@ -1,21 +1,52 @@
-import React from "react"
+import React, { useState } from "react";
 
-function App () {
+function App() {
+  const [fullName, setFullName] = useState({
+    fName: "",
+    lName: ""
+  });
 
-return (
+  function handleChange(event) {
+    const { value, name } = event.target;
 
-  <div className="container">
-    <h1>Hello</h1>
-    <form>
-      <input name="fname" placeholder="First Name" />
-      <input name="lname" placeholder="Last Name"  />
-      <button>Submit</button>
-    </form>
+    setFullName((prevValue) => {
+      if (name === "fname") {
+        return {
+          fName: value,
+          lName: prevValue.lName
+        };
+      } else if (name === "lname") {
+        return {
+          fName: prevValue.fName,
+          lName: value
+        };
+      }
+    });
+  }
+
+  return (
+    <div className="container">
+      <h1>
+        Hello {fullName.fName} {fullName.lName}
+      </h1>
+      <form>
+        <input
+          name="fname"
+          onChange={handleChange}
+          placeholder="First Name"
+          value={fullName.fName}
+        />
+        <input
+          name="lname"
+          onChange={handleChange}
+          placeholder="Last Name"
+          value={fullName.lName}
+        />
+
+        <button>Submit</button>
+      </form>
     </div>
-
-
-);
-
+  );
 }
 
-export default App
+export default App;
